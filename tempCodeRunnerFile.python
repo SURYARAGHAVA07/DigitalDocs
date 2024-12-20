@@ -1,0 +1,24 @@
+from reportlab.pdfgen import canvas
+
+def generate_font_preview(pdf_path):
+    c = canvas.Canvas(pdf_path, pagesize=letter)
+    fonts = [
+        "Helvetica", "Helvetica-Bold", "Helvetica-Oblique", "Helvetica-BoldOblique",
+        "Times-Roman", "Times-Bold", "Times-Italic", "Times-BoldItalic",
+        "Courier", "Courier-Bold", "Courier-Oblique", "Courier-BoldOblique",
+        "Symbol", "ZapfDingbats"
+    ]
+    y = 750  # Starting Y position
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(100, 800, "Font Preview")
+    c.setFont("Helvetica", 12)
+
+    for font in fonts:
+        c.setFont(font, 12)
+        c.drawString(100, y, f"This is {font} font.")
+        y -= 20  # Move to the next line
+
+    c.save()
+
+# Generate the preview PDF
+generate_font_preview("font_preview.pdf")

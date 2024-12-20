@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Blockchain</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #f0f8ff;
+            background-image: url('https://wallpapers.com/images/hd/transparent-blockchains-usqwfmjbwsjbisfa.jpg'); /* Add your image URL here */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background: rgba(6, 26, 92, 0.6); /* White background with 80% opacity */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 36px; /* Font size for header */
+            font-weight: bold; /* Font weight */
+            font-style: normal; /* Font style */
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: normal;
+            font-style: bold;
+            color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: normal;
+            color: #ffffff;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px; /* Font size for input and button */
+            font-family: 'Times New Roman', serif;
+        }
+        button {
+            background-color: #090855;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #090855;
+        }
+        #blockchain-container {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: rgba(6, 26, 92, 0.6); /* Slightly transparent background for blockchain container */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        h3 {
+            font-size: 24px;
+            font-weight: normal;
+            color: #ffffff;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: normal;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Certificate Blockchain - Digital Docs 🛅</h1>
+        <h2>Add Certificate</h2>
+        <label>Student Name</label>
+        <input type="text" id="student_name" placeholder="Enter student name">
+        <label>Student ID</label>
+        <input type="text" id="student_id" placeholder="Enter student ID">
+        <label>Course</label>
+        <input type="text" id="course" placeholder="Enter course">
+        <label>Institution</label>
+        <input type="text" id="institution" placeholder="Enter institution">
+        <label>Duration (Months)</label>
+        <input type="text" id="duration" placeholder="Enter duration in months">
+        <button onclick="addCertificate()">Add Certificate</button>
+        <button onclick="mineBlock()">Mine New Block</button>
+        <button onclick="viewBlockchain()">View Blockchain</button>
+        <button onclick="retrieveCertificate()">Retrieve Certificate</button>
+    </div>
+
+    <!-- Blockchain Container -->
+    <div id="blockchain-container">
+        <h3>Blockchain Data:</h3>
+        <pre id="blockchain-data">No blockchain data yet...</pre>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://127.0.0.1:5000';
+
+        async function addCertificate() {
+            const data = {
+                student_name: document.getElementById('student_name').value,
+                student_id: document.getElementById('student_id').value,
+                course: document.getElementById('course').value,
+                institution: document.getElementById('institution').value,
+                duration: document.getElementById('duration').value,
+            };
+            const response = await fetch(`${BASE_URL}/add_certificate`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        async function mineBlock() {
+            const response = await fetch(`${BASE_URL}/mine`, { method: 'POST' });
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        async function viewBlockchain() {
+            const response = await fetch(`${BASE_URL}/chain`);
+            const result = await response.json();
+            const blockchainData = document.getElementById('blockchain-data');
+            blockchainData.textContent = JSON.stringify(result, null, 2);
+        }
+    </script>
+</body>
+</html>
